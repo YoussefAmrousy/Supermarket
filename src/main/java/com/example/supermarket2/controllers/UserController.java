@@ -1,5 +1,7 @@
 package com.example.supermarket2.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -7,8 +9,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,6 +73,7 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authenticated);
         return "redirect:/supermarket/homepage";
     }
+
     @GetMapping("reset-pass")
     public ModelAndView getRestpassform() {
         ModelAndView mav = new ModelAndView("reset-pass.html");
@@ -90,6 +95,7 @@ public class UserController {
         return "redirect:/supermarket/login";
 
     }
+
     @PostMapping("/update-password")
     public String updatePassword(@AuthenticationPrincipal User user, @RequestParam String newPassword,
             RedirectAttributes redirectAttributes) {
@@ -99,5 +105,30 @@ public class UserController {
             redirectAttributes.addFlashAttribute("message", "Your password has been changed successfully");
         }
         return "redirect:/supermarket/edit-profile";
+    }
+
+    @GetMapping("/users")
+    public String getUsers(Model model) {
+        List<User> userList = userDao.getAllUsers();
+        model.addAttribute("users", userList);
+        model.addAttribute("isList", true);
+        return "profile.html";
+    }
+
+    // for finding a specific user (showing profile page) (can be used by admins)
+    @GetMapping("/users/{name}")
+    public String getUserByName(@PathVariable String name, Model model) {
+        User user = userDao.getUserByName(name);
+        model.addAttribute("user", user);
+        model.addAttribute("isList", false);
+        return "profile.html";
+    }
+
+    // showing logged in profile page
+    @GetMapping("/profile")
+    public String getUserByName(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("user", user);
+        model.addAttribute("isList", false);
+        return "profile.html";
     }
 }
