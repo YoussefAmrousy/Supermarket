@@ -5,10 +5,10 @@
 
 </head>
 
-<body style="background-color: #DDA379;">
+<body style="background-color:darkgreen;">
         <br><br><br><br>
         <div style="width: 360px;height: 420px; margin: auto;background-color: white;border-radius: 5px; "><br>
-                <h1 style="text-align: center;padding-top: 15px;color:#DDA379 ;">Sign Up</h><br><br>
+                <h1 style="text-align: center;padding-top: 15px;color:darkgreen ;">Sign Up</h><br><br>
                         <form th:action="@{/supermarket/saveUser}" th:object="${user}" method="post">
                                 <div><input type="text" th:field="*{username}" name="username"
                                                 placeholder="Enter username"
@@ -22,10 +22,10 @@
                                                 style="width : 70%;padding: 7px;border-radius: 6px;border: 1px solid gray;" />
                                 </div><br>
                                 <button type="submit" style="width : 40%;height:27px;
-                background-color: #DDA379; border-radius: 6px;border: 1px #DDA379;"> Sign Up</button><br>
+                background-color: darkgreen; border-radius: 6px;border: 1px darkgreen;"> Sign Up</button><br>
                 </h1>
                 <h4 style="text-align: center; color:black;">Already have an account?<a th:href="@{/supermarket/login}"
-                                style="color:#DDA379;"> Login </a>
+                                style="color:darkgreen;"> Login </a>
                 </h4>
 
                 </form>

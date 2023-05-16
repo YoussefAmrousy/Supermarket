@@ -10,9 +10,7 @@ import com.example.supermarket2.models.User;
 import com.example.supermarket2.repositories.UserRepo;
 
 @Service
-public class UserService implements UserDetailsService { // 3shan a3rf l user ele logged in fl session de
-    // hpass l service class dh ll spring security fl config bta3y, l class dh
-    // mas'olyeto eno hwa ele yfetch l user obj de
+public class UserService implements UserDetailsService { 
 
     @Autowired
     private UserRepo userRepo;
