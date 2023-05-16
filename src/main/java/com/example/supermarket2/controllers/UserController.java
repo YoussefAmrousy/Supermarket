@@ -181,4 +181,18 @@ public class UserController {
         }
         return "redirect:/supermarket/edit-profile";
     }
+
+    @PostMapping("address")
+    public String Address(@ModelAttribute User user) {
+        String email = user.getEmail();
+        User userfinder = this.userRepo.findByEmail(email).orElse(null);
+        if (userfinder == null) {
+            return "redirect:/supermarket/homepage";
+        }
+        String aa = user.getAddress();
+        userfinder.setAddress(aa);
+        this.userRepo.save(userfinder);
+        return "redirect:/supermarket/homepage";
+
+    }
 }
