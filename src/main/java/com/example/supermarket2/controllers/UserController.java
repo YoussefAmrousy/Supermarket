@@ -96,17 +96,6 @@ public class UserController {
 
     }
 
-    @PostMapping("/update-password")
-    public String updatePassword(@AuthenticationPrincipal User user, @RequestParam String newPassword,
-            RedirectAttributes redirectAttributes) {
-        Long userID = user.getId();
-        boolean success = userDao.updatePassword(userID, newPassword);
-        if (success) {
-            redirectAttributes.addFlashAttribute("message", "Your password has been changed successfully");
-        }
-        return "redirect:/supermarket/edit-profile";
-    }
-
     @GetMapping("/users")
     public String getUsers(Model model) {
         List<User> userList = userDao.getAllUsers();
@@ -130,5 +119,66 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("isList", false);
         return "profile.html";
+    }
+
+    // for editing/updating user info
+    @GetMapping("/edit-profile")
+    public String editProfile(@AuthenticationPrincipal User user, Model model) {
+        if (user != null) {
+            model.addAttribute("user", user);
+            return "edit-profile";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/update-username")
+    public String updateUsername(@RequestParam String oldUsername, @RequestParam String newUsername,
+            RedirectAttributes redirectAttributes) {
+        boolean success = userDao.updateUsername(oldUsername, newUsername);
+        if (success) {
+            redirectAttributes.addFlashAttribute("message", "Your user name has been changed successfully");
+            User user = userDao.getUserByName(newUsername);
+            Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
+                    user,
+                    user.getPassword(),
+                    user.getAuthorities());
+            SecurityContextHolder.clearContext();
+            SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+            return "redirect:/supermarket/edit-profile";
+        } else {
+            return "redirect:/supermarket/edit-profile";
+        }
+    }
+
+    @PostMapping("/update-password")
+    public String updatePassword(@AuthenticationPrincipal User user, @RequestParam String newPassword,
+            RedirectAttributes redirectAttributes) {
+        Long userID = user.getId();
+        boolean success = userDao.updatePassword(userID, newPassword);
+        if (success) {
+            redirectAttributes.addFlashAttribute("message", "Your password has been changed successfully");
+        }
+        return "redirect:/supermarket/edit-profile";
+    }
+
+    @PostMapping("/update-profile-pic")
+    public String updateProfilePic(@AuthenticationPrincipal User user, @RequestParam String profilePic,
+            RedirectAttributes redirectAttributes) {
+        Long userID = user.getId();
+        boolean success = userDao.updateProfilePic(userID, profilePic);
+        if (success) {
+            User updatedUser = userDao.getUserById(userID);
+            Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
+                    updatedUser,
+                    updatedUser.getPassword(),
+                    updatedUser.getAuthorities());
+            SecurityContextHolder.clearContext();
+            SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+            redirectAttributes.addFlashAttribute("message", "Your profile picture has been updated successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Failed to update your profile picture.");
+        }
+        return "redirect:/supermarket/edit-profile";
     }
 }
