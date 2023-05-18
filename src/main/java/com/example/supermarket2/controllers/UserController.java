@@ -176,7 +176,7 @@ public class UserController {
             SecurityContextHolder.clearContext();
             SecurityContextHolder.getContext().setAuthentication(newAuthentication);
             updatedUser.setAddress(addressField);
-            redirectAttributes.addFlashAttribute("message", "Your profile picture has been updated successfully.");
+            redirectAttributes.addFlashAttribute("message", "Your address has been updated successfully.");
         } else {
             redirectAttributes.addFlashAttribute("error", "Failed to update your profile picture.");
         }
