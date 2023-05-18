@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/supermarket")
 public class DynamicController {
 
-    @GetMapping("homepage")
+    @GetMapping("/homepage")
     public ModelAndView getHomePage() {
         ModelAndView mav = new ModelAndView("homepage.html");
         return mav;
