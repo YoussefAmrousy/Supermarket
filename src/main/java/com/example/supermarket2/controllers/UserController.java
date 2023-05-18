@@ -52,7 +52,6 @@ public class UserController {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         this.userRepo.save(user);
         return "redirect:/supermarket/login";
-
     }
 
     @GetMapping("login")
