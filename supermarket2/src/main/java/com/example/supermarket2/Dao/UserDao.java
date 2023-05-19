@@ -17,4 +17,6 @@ public interface UserDao {
     public boolean updateProfilePic(Long userID, String profilePic);
 
     public boolean updateAddress(Long userID, String address);
-}
+    public boolean updateCreditCard(Long userID, Long creditCard);
+    public boolean updateCvv(Long userID,int cvv);
+    }

@@ -25,12 +25,29 @@ public class User implements UserDetails {
     private String profilePic;
     private String role;
     private String address;
-
+    private int cvv;
+    private long creditCard;
     public User() {
         this.role = "User";
     }
 
-    public User(Long id, String username, String email, String password, String profilePic, String address) {
+    public int getCvv() {
+        return this.cvv;
+    }
+
+    public void setCvv(int cvv) {
+        this.cvv = cvv;
+    }
+
+    public long getCreditCard() {
+        return this.creditCard;
+    }
+
+    public void setCreditCard(long creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    public User(Long id, String username, String email, String password, String profilePic, String address, int cvv, long creditCard) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -38,6 +55,8 @@ public class User implements UserDetails {
         this.profilePic = profilePic;
         this.role = "User";
         this.address = address;
+        this.cvv = cvv;
+        this.creditCard = creditCard;
     }
 
     public Long getId() {

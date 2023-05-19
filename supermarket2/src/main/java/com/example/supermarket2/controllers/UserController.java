@@ -181,6 +181,46 @@ public class UserController {
         }
         return "redirect:/supermarket/edit-profile";
     }
+    @PostMapping("/update-CreditCard")
+    public String updateCreditCard(@AuthenticationPrincipal User user, @RequestParam long creditCardField,
+            RedirectAttributes redirectAttributes) {
+        Long userID = user.getId();
+        boolean success = userDao.updateCreditCard(userID, creditCardField);
+        if (success) {
+            User updatedUser = userDao.getUserById(userID);
+            Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
+                    updatedUser,
+                    updatedUser.getPassword(),
+                    updatedUser.getAuthorities());
+            SecurityContextHolder.clearContext();
+            SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+            updatedUser.setCreditCard(creditCardField);
+            redirectAttributes.addFlashAttribute("message", "Your Credit Card has been updated successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Failed to update your profile picture.");
+        }
+        return "redirect:/supermarket/edit-profile";
+    }
+    @PostMapping("/update-Cvv")
+    public String updateCvv(@AuthenticationPrincipal User user, @RequestParam int cvvField,
+            RedirectAttributes redirectAttributes) {
+        Long userID = user.getId();
+        boolean success = userDao.updateCvv(userID, cvvField);
+        if (success) {
+            User updatedUser = userDao.getUserById(userID);
+            Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
+                    updatedUser,
+                    updatedUser.getPassword(),
+                    updatedUser.getAuthorities());
+            SecurityContextHolder.clearContext();
+            SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+            updatedUser.setCvv(cvvField);
+            redirectAttributes.addFlashAttribute("message", "Your CVV has been updated successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Failed to update your profile picture.");
+        }
+        return "redirect:/supermarket/edit-profile";
+    }
 
     @PostMapping("/update-profile-pic")
     public String updateProfilePic(@AuthenticationPrincipal User user, @RequestParam String profilePic,
