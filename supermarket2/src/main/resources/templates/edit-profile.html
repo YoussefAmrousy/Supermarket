@@ -62,6 +62,20 @@
                 <button class="update-edit-button" type="submit">Update Address</button>
             </div>
         </form>
+        <form method="post" th:action="@{/supermarket/update-CreditCard}">
+            <label class="edit-label">Credit Card:</label>
+            <div class="edit-input-container">
+                <input class="edit-input" type="text" name="creditCardField" th:value="${user.creditCard}" />
+                <button class="update-edit-button" type="submit">Update Address</button>
+            </div>
+        </form>
+        <form method="post" th:action="@{/supermarket/update-Cvv}">
+            <label class="edit-label">Cvv:</label>
+            <div class="edit-input-container">
+                <input class="edit-input" type="text" name="cvvField" th:value="${user.cvv}" />
+                <button class="update-edit-button" type="submit">Update Address</button>
+            </div>
+        </form>
         <form method="get" th:action="@{/supermarket/profile}">
             <button class="return-button" type="submit">Return to profile page</button>
         </form>
