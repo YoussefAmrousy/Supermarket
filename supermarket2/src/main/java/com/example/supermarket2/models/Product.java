@@ -11,6 +11,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private Long userID;
     private String name;
     private int price;
     private int quantity;
@@ -18,11 +19,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String name, int price, int quantity) {
-        this.id = id;
+    public Product(String name, int price, int quantity, Long userID) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.userID = userID;
     }
 
     public Long getId() {
@@ -31,6 +32,14 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getUserID() {
+        return this.userID;
+    }
+
+    public void setUserID(Long userID) {
+        this.userID = userID;
     }
 
     public String getName() {

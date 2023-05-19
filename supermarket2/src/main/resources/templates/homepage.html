@@ -25,8 +25,29 @@
             </ul>
         </div>
     </nav>
+    <div>
+        <table class="table table-bordered table-striped">
 
-    
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="product: ${products}">
+                    <td th:text="${product.name}" />
+                    <td th:text="${product.price}" />
+                    <td th:text="${product.quantity}" />
+                    <td><button><a th:href="@{/supermarket/addToCart}">Add To Cart</a></button></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
 </body>
 
 </html>

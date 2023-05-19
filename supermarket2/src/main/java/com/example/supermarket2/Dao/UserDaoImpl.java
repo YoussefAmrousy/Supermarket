@@ -118,13 +118,13 @@ public class UserDaoImpl implements UserDao {
     
     @Override
     public boolean updateCreditCard(Long userID, Long creditCard) {
-        String sql = "UPDATE user SET creditCard = ? WHERE id = ?";
+        String sql = "UPDATE user SET credit_card = ? WHERE id = ?";
         int rowsAffected = jdbcTemplate.update(sql, creditCard, userID);
         return rowsAffected == 1;
     }
     @Override
     public boolean updateCvv(Long userID,int cvv){
-        String sql = "UPDATE user SET creditCard = ? WHERE id = ?";
+        String sql = "UPDATE user SET cvv = ? WHERE id = ?";
         int rowsAffected = jdbcTemplate.update(sql, cvv, userID);
         return rowsAffected == 1;
     }
