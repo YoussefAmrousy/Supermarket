@@ -27,7 +27,7 @@
                     <td th:text="${product.name}" />
                     <td th:text="${product.price}" />
                     <td th:text="${product.quantity}" />
-                    <td><button>Edit</button></td>
+                    <td><button th:id="${product.productId}">Edit</button></td>
                 </tr>
             </tbody>
 

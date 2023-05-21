@@ -8,10 +8,9 @@ import javax.persistence.Id;
 @Entity
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long productId;
 
-    private Long userID;
     private String name;
     private int price;
     private int quantity;
@@ -19,27 +18,18 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, int price, int quantity, Long userID) {
+    public Product(String name, int price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.userID = userID;
     }
 
-    public Long getId() {
-        return this.id;
+    public Long getProductId() {
+        return this.productId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserID() {
-        return this.userID;
-    }
-
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public String getName() {

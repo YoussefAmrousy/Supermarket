@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Homepage</title>
+    <title>View Cart</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -27,22 +27,28 @@
         </div>
     </nav>
 
-    <div th:if="${message}">
-        <p th:text="${message}" class="success-message"></p>
-    </div>
-    <form th:each="product : ${products}" th:action="@{/supermarket/save-product-cart}" method="post">
+    <div class="container">
 
-        <label>Product Name: </label>
-        <label th:text="${product.name}"></label><br>
-        <label>Price: </label>
-        <label th:text="${product.price}"></label><br>
-        <label>Quantity</label>
-        <input type="number" name="quan" />
-        <input type="hidden" th:name="quantity" th:value="${product.quantity}" />
-        <input type="hidden" th:name="id" th:value="${product.productId}" />
-        <button type="submit">Add to Cart</button>
-        <br>
-    </form>
+        <h3>List Products</h3>
+
+        <hr />
+
+        <table class="table table-bordered table-striped">
+
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <form th:each="cartItem : ${cartItems}" th:action="@{/supermarket/viewCart}" method="post">
+                <tr>
+                    <td th:text="${cartItems.product.getName()}" />
+                </tr>
+            </tbody>
+            </table>
+        </table>
+    </div>
 </body>
 
 </html>

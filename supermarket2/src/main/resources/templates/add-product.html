@@ -11,6 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+    
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -26,6 +27,7 @@
             </ul>
         </div>
     </nav>
+
     <form method="POST" th:action="@{/supermarket/add-product}">
         <label>Product Name</label>
         <input type="text" name="name" th:field="*{product.name}"><br>
@@ -35,4 +37,5 @@
         <input type="text" name="quantity" th:field="*{product.quantity}"><br>
         <input type="submit" name="add" value="Add Product">
     </form>
+
 </body>
