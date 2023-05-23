@@ -26,6 +26,13 @@ public class CartController {
         ModelAndView mav = new ModelAndView("view-cart.html");
         List<CartItem> cartItems = cartDto.getCartItemsFromCart(user);
         mav.addObject("cartItems", cartItems);
+        int subtotal = 0;
+        for (CartItem cartItem : cartItems) {
+            int totalprice = cartItem.getPrice();
+            subtotal = subtotal + totalprice;
+        }
+        mav.addObject("subtotal", subtotal);
         return mav;
     }
+    
 }
