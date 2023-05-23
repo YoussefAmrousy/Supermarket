@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.supermarket2.Dto.CartDto;
+import com.example.supermarket2.Dto.ProductDto;
 import com.example.supermarket2.models.CartItem;
 import com.example.supermarket2.models.Product;
 import com.example.supermarket2.models.User;
@@ -18,7 +19,6 @@ import com.example.supermarket2.repositories.ProductRepo;
 @Controller
 @RequestMapping("/supermarket")
 public class CartItemController {
-    
 
     @Autowired
     private CartItemRepo cartItemRepo;
@@ -29,25 +29,29 @@ public class CartItemController {
     @Autowired
     private CartDto cartDto;
 
+    @Autowired
+    private ProductDto productDto;
+
     @PostMapping("save-product-cart")
     public String saveProduct(@RequestParam(name = "id", required = true) Long id,
             @RequestParam(name = "quan", required = true) int quantity,
             @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes) {
-        Product product = this.productRepo.findById(id).orElse(null);
+        Product product = this.productRepo.findById(id).orElse(null); // check if item exists
         if (product != null) {
             if (quantity <= product.getQuantity()) {
+                // create cartItem to be added to cart
                 CartItem cartItem = new CartItem();
                 cartItem.setProduct(product);
                 cartItem.setQuantity(quantity);
                 cartItem.setUserID(user.getId());
-
                 cartItemRepo.save(cartItem);
 
-                product.setQuantity(product.getQuantity() - quantity);
-                productRepo.save(product);
+                // Deduct quantity from product quantity
+                productDto.decreaseProductQuantity(product, cartItem, quantity);
 
+                // Add cartItem to user cart
                 cartDto.saveCartItemToCart(user, cartItem);
-                redirectAttributes.addFlashAttribute("message", "");
+                redirectAttributes.addFlashAttribute("message", "You've added " + product.getName() + " to your cart");
 
                 return "redirect:/supermarket/homepage";
             } else {
@@ -59,11 +63,18 @@ public class CartItemController {
         return null;
     }
 
-    @PostMapping
-    public String deleteCartItem(@RequestParam(name = "id", required = true) Long id, @AuthenticationPrincipal User user) {
-        CartItem cartItem = cartItemRepo.findById(id).orElse(null);
-        cartItemRepo.delete(cartItem);
-        return "redirect:/supermarket/homepage"; 
+    @PostMapping("/deleteItem")
+    public String deleteCartItem(@RequestParam(name = "id", required = true) Long id,
+            @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes) {
+        CartItem cartItem = this.cartItemRepo.findById(id).orElse(null);
+        if (cartItem != null) {
+            Product product = cartItem.getProduct();
+            productDto.increaseProductQuantity(product, cartItem);
+
+            cartDto.deleteCartItemFromCart(user, cartItem);
+            cartItemRepo.delete(cartItem);
+        }
+        return "redirect:/supermarket/viewCart";
     }
 
 }

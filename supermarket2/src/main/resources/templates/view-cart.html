@@ -17,9 +17,9 @@
                 <a class="navbar-brand" href="#">Supermarket</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li><a th:href="@{/supermarket/homepage}">Home</a></li>
                 <li><a th:href="@{/supermarket/profile}">Profile</a></li>
-                <li><a th:href="@{/supermarket/viewCart}">View Cart</a></li>
+                <li class="active"><a th:href="@{/supermarket/viewCart}">View Cart</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a th:href="@{/supermarket/logout}"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
@@ -38,15 +38,22 @@
             <thead>
                 <tr>
                     <th>Product Name</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
-                <form th:each="cartItem : ${cartItems}" th:action="@{/supermarket/viewCart}" method="post">
-                <tr>
-                    <td th:text="${cartItems.product.getName()}" />
-                </tr>
+                <th:block th:each="cartItem : ${cartItems}">
+                    <tr>
+                        <td th:text="${cartItem.product.name}" />
+                        <td>
+                            <form th:action="@{/supermarket/deleteItem}" method="post">
+                                <input type="hidden" th:name="id" th:value="${cartItem.id}" />
+                                <input type="submit" name="delete" value="Delete">
+                            </form>
+                        </td>
+                    </tr>
             </tbody>
-            </table>
+        </table>
         </table>
     </div>
 </body>

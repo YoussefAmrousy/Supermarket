@@ -10,4 +10,5 @@ import com.example.supermarket2.models.User;
 public interface CartDto {
     public void saveCartItemToCart(@AuthenticationPrincipal User user, CartItem cartItem);
     public List<CartItem> getCartItemsFromCart(@AuthenticationPrincipal User user);
+    public void deleteCartItemFromCart(@AuthenticationPrincipal User user, CartItem cartItem);
 }

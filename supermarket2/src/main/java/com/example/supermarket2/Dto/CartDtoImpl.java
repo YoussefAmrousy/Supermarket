@@ -49,4 +49,13 @@ public class CartDtoImpl implements CartDto {
         }
     }
 
+    @Override
+    public void deleteCartItemFromCart(User user, CartItem cartItem) {
+        Cart cart = cartRepo.findByuserID(user.getId()).orElse(null);
+        if (cart != null) {
+            cart.getCartItems().remove(cartItem);
+            cartRepo.save(cart);
+        }
+    }
+
 }
