@@ -45,34 +45,54 @@ public class CartItemController {
     public String saveProductCart(@RequestParam(name = "id", required = true) Long id,
             @RequestParam(name = "quan", required = true) int quantity,
             @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes) {
-        Product product = this.productRepo.findById(id).orElse(null); // check if item exists
-        if (product != null) {
-            if (quantity <= product.getQuantity()) {
-                // create cartItem to be added to cart
-                CartItem cartItem = new CartItem();
-                cartItem.setProduct(product);
-                cartItem.setQuantity(quantity);
-                cartItem.setPrice(quantity*product.getPrice());
-                cartItem.setUserID(user.getId());
+                
+                Product product = this.productRepo.findById(id).orElse(null); // check if item exists
+                
+                // Check if product exists
+                if (product == null) {
+                    redirectAttributes.addFlashAttribute("message", "Product not found!");
+                    return "redirect:/supermarket/homepage";
+                }
+
+                // Check if there is enough quantity
+                if (quantity > product.getQuantity()) {
+                    redirectAttributes.addFlashAttribute("message", "Not enough quantity available, there's only " + product.getQuantity() + " available");
+                    return "redirect:/supermarket/homepage";
+                }
+                
+                // Create CartItem
+                CartItem cartItem = cartItemDto.createItem(user, product, quantity);
                 cartItemRepo.save(cartItem);
 
                 // Deduct quantity from product quantity
                 productDto.decreaseProductQuantity(product, cartItem, quantity);
 
-                // Add cartItem to user cart
-                cartDto.saveCartItemToCart(user, cartItem);
+                // Check if there is cart created or cart is already ordered
                 Cart cart = this.cartRepo.findByuserID(user.getId()).orElse(null);
-                cartItemDto.setCartSubTotal(user, cart);
+                if (cart == null) {
+                    cart = new Cart();
+                    cart.setUserID(user.getId());
+                    cartRepo.save(cart);
+                }
+                else {
+                    if (cart.isOrdered() == true) {
+                        cart = new Cart();
+                        cart.setUserID(user.getId());
+                        cartRepo.save(cart);
+                    }
+                }
+
+                // Add cartItem to user cart
+                cartDto.saveCartItemToCart(user, cart, cartItem);
+                cartRepo.save(cart);
+                cartItemRepo.save(cartItem);
+
+                cartDto.increaseCartSubTotal(user, cart, cartItem.getPrice());
+                cartRepo.save(cart);
+
                 redirectAttributes.addFlashAttribute("message", "You've added " + product.getName() + " to your cart");
 
                 return "redirect:/supermarket/homepage";
-            } else {
-                redirectAttributes.addFlashAttribute("message",
-                        "There's only " + product.getQuantity() + " available");
-                return "redirect:/supermarket/homepage";
-            }
-        }
-        return null;
     }
 
     @PostMapping("/deleteItem")
@@ -86,6 +106,7 @@ public class CartItemController {
             cartDto.deleteCartItemFromCart(user, cartItem);
             cartItemRepo.delete(cartItem);
         }
+
         return "redirect:/supermarket/viewCart";
     }
 

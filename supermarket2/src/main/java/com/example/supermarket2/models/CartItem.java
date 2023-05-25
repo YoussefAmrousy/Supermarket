@@ -28,6 +28,7 @@ public class CartItem {
     private int quantity;
     private Long userID;
     private int price;
+    private boolean ordered;
 
     public Cart getCart() {
         return cart;
@@ -38,14 +39,16 @@ public class CartItem {
     }
 
     public CartItem() {
+        this.ordered = false;
     }
 
-    public CartItem(Long id, Product product, int quantity, Long userID, int price) {
+    public CartItem(Long id, Product product, int quantity, Long userID, int price, boolean ordered) {
         this.id = id;
         this.product = product;
         this.quantity = quantity;
         this.userID = userID;
         this.price = price;
+        this.ordered = ordered;
     }
 
     public Long getId() {
@@ -86,5 +89,13 @@ public class CartItem {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public boolean isOrdered() {
+        return ordered;
+    }
+
+    public void setOrdered(boolean ordered) {
+        this.ordered = ordered;
     }
 }

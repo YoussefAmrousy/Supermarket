@@ -16,7 +16,6 @@ import com.example.supermarket2.repositories.CartRepo;
 @Repository
 public class CartDtoImpl implements CartDto {
 
-
     @Autowired
     private CartRepo cartRepo;
 
@@ -24,27 +23,19 @@ public class CartDtoImpl implements CartDto {
     private CartItemRepo cartItemRepo;
 
     @Override
-    public void saveCartItemToCart(@AuthenticationPrincipal User user, CartItem cartItem) {
-        Cart cart = cartRepo.findByuserID(user.getId()).orElse(null);
-        if (cart == null) {
-            cart = new Cart();
-            // cart.setSubtotal(0);
-            cart.setUserID(user.getId());
-            cartRepo.save(cart);
-        }
+    public void saveCartItemToCart(@AuthenticationPrincipal User user, Cart cart, CartItem cartItem) {
         cartItem.setCart(cart);
         cartItemRepo.save(cartItem);
+
         cart.addCartItem(cartItem);
-        cartRepo.save(cart);
     }
 
     @Override
     public List<CartItem> getCartItemsFromCart(@AuthenticationPrincipal User user) {
-        Cart cart= cartRepo.findByuserID(user.getId()).orElse(null);
+        Cart cart = cartRepo.findByuserID(user.getId()).orElse(null);
         if (cart == null) {
             return null;
-        }
-        else {
+        } else {
             return new ArrayList<>(cart.getCartItems());
         }
     }
@@ -54,8 +45,24 @@ public class CartDtoImpl implements CartDto {
         Cart cart = cartRepo.findByuserID(user.getId()).orElse(null);
         if (cart != null) {
             cart.getCartItems().remove(cartItem);
+            if (cart.getCartItems().isEmpty()) {
+                cartRepo.delete(cart);
+                cartRepo.save(cart);
+            }
             cartRepo.save(cart);
         }
+    }
+
+    @Override
+    public void increaseCartSubTotal(@AuthenticationPrincipal User user, Cart cart, int price) {
+        int subtotal = cart.getSubtotal() + price;
+        cart.setSubtotal(subtotal);
+    }
+
+    @Override
+    public void decreaseCartSubTotal(User user, Cart cart, int price) {
+        int subtotal = cart.getSubtotal() - price;
+        cart.setSubtotal(subtotal);
     }
 
 }

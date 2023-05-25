@@ -22,16 +22,21 @@ public class Cart {
     
     private Long userID;
     private int subtotal;
-
+    private boolean ordered;
+    private int totalItems;
 
     public Cart() {
+        this.subtotal = 0;
+        this.ordered = false;
     }
 
-    public Cart(Long CartId, List<CartItem> cartItems, Long userID, int subtotal) {
+    public Cart(Long CartId, List<CartItem> cartItems, Long userID, int subtotal, boolean ordered, int totalItems) {
         this.CartId = CartId;
         this.cartItems = cartItems;
         this.userID = userID;
         this.subtotal = subtotal;
+        this.ordered = ordered;
+        this.totalItems = totalItems;
     }
 
     public Long getCartId() {
@@ -74,6 +79,22 @@ public class Cart {
     public void removeCartItem(CartItem cartItem) {
         cartItems.remove(cartItem);
         cartItem.setCart(null);
+    }
+
+    public boolean isOrdered() {
+        return ordered;
+    }
+
+    public void setOrdered(boolean ordered) {
+        this.ordered = ordered;
+    }
+
+    public int getTotalItems() {
+        return totalItems;
+    }
+
+    public void setTotalItems(int totalItems) {
+        this.totalItems = totalItems;
     }
     
 }
