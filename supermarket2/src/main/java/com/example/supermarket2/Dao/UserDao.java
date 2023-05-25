@@ -8,10 +8,7 @@ public interface UserDao {
     public User getUserById(Long id);
     
     public boolean updateUsername(String oldUsername, String newUsername);
-    public default boolean updatePassword(Long userID, String newPassword) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updatePassword'");
-    }
+    public boolean updatePassword(Long userID, String newPassword);
 
     public boolean updateAddress(Long userID, String address);
     public boolean updateCreditCard(Long userID, Long creditCard);
