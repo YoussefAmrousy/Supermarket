@@ -17,7 +17,7 @@
                 <a class="navbar-brand" href="#">Supermarket</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="@{/supermarket/homepage}">Back</a></li>
+                <li class="active"><a th:href="@{/supermarket/homepage}">Back</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a th:href="@{/supermarket/logout}"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
@@ -25,13 +25,10 @@
         </div>
     </nav>
     <center>
-    <h1>Thanks for shopping!</h1>
-    <div th:if="${message}">
-        <h3 th:text="${message}" class="success-message"></h3>
-    </div>
-    <div th:if="${message2}">
-        <h3 th:text="${message2}" class="success-message"></h3>
-    </div>
+        <h1>Thanks for shopping!</h1>
+        <h3 th:text="'Hello, ' + ${name}"></h3>
+        <h3 th:text="'Your order ID is: ' + ${orderID}"></h3>
     </center>
-    </body>
-    </html>
+</body>
+
+</html>

@@ -12,8 +12,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+
 @Entity
-@Table(name = "OrderPlaced")
+@Table(name="OrderPlaced")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +26,10 @@ public class Order {
 
     private Long userID;
     private int subtotal;
-
+    
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dateOrdered;
+
 
     public Order() {
     }
@@ -78,5 +80,5 @@ public class Order {
 
     public void setDateOrdered(Date dateOrdered) {
         this.dateOrdered = dateOrdered;
-    }
+    } 
 }

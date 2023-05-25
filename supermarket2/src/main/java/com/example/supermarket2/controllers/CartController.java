@@ -9,29 +9,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.supermarket2.Dto.CartDto;
-import com.example.supermarket2.models.CartItem;
+import com.example.supermarket2.models.Cart;
 import com.example.supermarket2.models.User;
+import com.example.supermarket2.repositories.CartRepo;
 
 @Controller
 @RequestMapping("/supermarket")
 public class CartController {
 
+
     @Autowired
-    private CartDto cartDto;
+    private CartRepo cartRepo;
 
 
     @GetMapping("/viewCart")
     public ModelAndView viewCart(@AuthenticationPrincipal User user) {
         ModelAndView mav = new ModelAndView("view-cart.html");
-        List<CartItem> cartItems = cartDto.getCartItemsFromCart(user);
-        mav.addObject("cartItems", cartItems);
-        int subtotal = 0;
-        for (CartItem cartItem : cartItems) {
-            int totalprice = cartItem.getPrice();
-            subtotal = subtotal + totalprice;
+        List<Cart> carts = cartRepo.findAllByuserID(user.getId());
+        for (Cart cart : carts) {
+            if (cart.isOrdered() != true) {
+                mav.addObject("cartItems", cart.getCartItems());
+                break;
+            }
         }
-        mav.addObject("subtotal", subtotal);
         return mav;
     }
     

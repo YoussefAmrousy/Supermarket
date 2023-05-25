@@ -35,9 +35,10 @@ public class CartDtoImpl implements CartDto {
         Cart cart = cartRepo.findByuserID(user.getId()).orElse(null);
         if (cart == null) {
             return null;
-        } else {
+        } else if (cart != null && cart.isOrdered() == false) {
             return new ArrayList<>(cart.getCartItems());
         }
+        return null;
     }
 
     @Override

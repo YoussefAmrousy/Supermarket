@@ -3,6 +3,7 @@ package com.example.supermarket2.Dto;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Repository;
 
+import com.example.supermarket2.models.Cart;
 import com.example.supermarket2.models.CartItem;
 import com.example.supermarket2.models.Product;
 import com.example.supermarket2.models.User;
@@ -11,7 +12,7 @@ import com.example.supermarket2.models.User;
 public class CartItemDtoImpl implements CartItemDto {
 
     @Override
-    public CartItem createItem(@AuthenticationPrincipal User user, Product product, int quantity) {
+    public CartItem createItem(@AuthenticationPrincipal User user, Product product, int quantity, Cart cart) {
         CartItem cartItem = new CartItem();
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);

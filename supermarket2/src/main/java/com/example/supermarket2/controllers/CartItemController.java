@@ -1,5 +1,7 @@
 package com.example.supermarket2.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -60,27 +62,32 @@ public class CartItemController {
                     return "redirect:/supermarket/homepage";
                 }
                 
-                // Create CartItem
-                CartItem cartItem = cartItemDto.createItem(user, product, quantity);
-                cartItemRepo.save(cartItem);
-
-                // Deduct quantity from product quantity
-                productDto.decreaseProductQuantity(product, cartItem, quantity);
 
                 // Check if there is cart created or cart is already ordered
-                Cart cart = this.cartRepo.findByuserID(user.getId()).orElse(null);
+                List<Cart> carts = this.cartRepo.findAllByuserID(user.getId());
+                Cart cart = null;
+                if (!carts.isEmpty()) {
+                    for (Cart cartt: carts) {
+                            if (cartt.isOrdered()) {
+                                continue;
+                            }
+                            cart = cartt;
+                            break;
+                    }
+                }
+
                 if (cart == null) {
                     cart = new Cart();
                     cart.setUserID(user.getId());
                     cartRepo.save(cart);
                 }
-                else {
-                    if (cart.isOrdered() == true) {
-                        cart = new Cart();
-                        cart.setUserID(user.getId());
-                        cartRepo.save(cart);
-                    }
-                }
+
+                // Create CartItem
+                CartItem cartItem = cartItemDto.createItem(user, product, quantity, cart);
+                cartItemRepo.save(cartItem);
+
+                // Deduct quantity from product quantity
+                productDto.decreaseProductQuantity(product, cartItem, quantity);
 
                 // Add cartItem to user cart
                 cartDto.saveCartItemToCart(user, cart, cartItem);
