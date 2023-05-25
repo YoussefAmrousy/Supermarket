@@ -20,24 +20,6 @@ public class UserDaoImpl implements UserDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<User> getAllUsers() {
-        String sql = "SELECT * FROM user";
-        List<User> userList = jdbcTemplate.query(sql, new RowMapper<User>() {
-            @Override
-            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-                User user = new User();
-                user.setId(rs.getLong("id"));
-                user.setUsername(rs.getString("username"));
-                user.setEmail(rs.getString("email"));
-                user.setProfilePic(rs.getString("profile_pic"));
-                user.setPassword(rs.getString("password"));
-                return user;
-            }
-        });
-        return userList;
-    }
-
-    @Override
     public User getUserById(Long id) {
         String sql = "SELECT * FROM user WHERE id = ?";
         List<User> users = jdbcTemplate.query(sql, new PreparedStatementSetter() {
@@ -52,7 +34,6 @@ public class UserDaoImpl implements UserDao {
                 user.setId(rs.getLong("id"));
                 user.setUsername(rs.getString("username"));
                 user.setEmail(rs.getString("email"));
-                user.setProfilePic(rs.getString("profile_pic"));
                 user.setPassword(rs.getString("password"));
                 return user;
             }
@@ -75,20 +56,11 @@ public class UserDaoImpl implements UserDao {
                 user.setId(rs.getLong("id"));
                 user.setUsername(rs.getString("username"));
                 user.setEmail(rs.getString("email"));
-                user.setProfilePic(rs.getString("profile_pic"));
                 user.setPassword(rs.getString("password"));
                 return user;
             }
         });
         return users.isEmpty() ? null : users.get(0);
-    }
-
-    //edit profile methods
-    @Override
-    public boolean updateProfilePic(Long userID, String profilePic) {
-        String sql = "UPDATE user SET profile_pic = ? WHERE id = ?";
-        int rowsAffected = jdbcTemplate.update(sql, profilePic, userID);
-        return rowsAffected == 1;
     }
 
     @Override

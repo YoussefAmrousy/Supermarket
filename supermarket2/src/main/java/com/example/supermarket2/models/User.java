@@ -22,7 +22,6 @@ public class User implements UserDetails {
     private String username;
     private String email;
     private String password;
-    private String profilePic;
     private String role;
     private String address;
     private int cvv;
@@ -47,12 +46,11 @@ public class User implements UserDetails {
         this.creditCard = creditCard;
     }
 
-    public User(Long id, String username, String email, String password, String profilePic, String address, int cvv, long creditCard) {
+    public User(Long id, String username, String email, String password, String address, int cvv, long creditCard) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.profilePic = profilePic;
         this.role = "User";
         this.address = address;
         this.cvv = cvv;
@@ -89,14 +87,6 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getProfilePic() {
-        return this.profilePic;
-    }
-
-    public void setProfilePic(String profilePic) {
-        this.profilePic = profilePic;
     }
 
     public void setAddress(String address) {

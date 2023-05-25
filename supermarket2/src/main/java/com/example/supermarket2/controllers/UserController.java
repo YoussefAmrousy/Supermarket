@@ -95,14 +95,6 @@ public class UserController {
 
     }
 
-    @GetMapping("/users")
-    public String getUsers(Model model) {
-        List<User> userList = userDao.getAllUsers();
-        model.addAttribute("users", userList);
-        model.addAttribute("isList", true);
-        return "profile.html";
-    }
-
     // for finding a specific user (showing profile page) (can be used by admins)
     @GetMapping("/users/{name}")
     public String getUserByName(@PathVariable String name, Model model) {
@@ -216,26 +208,6 @@ public class UserController {
             SecurityContextHolder.getContext().setAuthentication(newAuthentication);
             updatedUser.setCvv(cvvField);
             redirectAttributes.addFlashAttribute("message", "Your CVV has been updated successfully.");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "Failed to update your profile picture.");
-        }
-        return "redirect:/supermarket/edit-profile";
-    }
-
-    @PostMapping("/update-profile-pic")
-    public String updateProfilePic(@AuthenticationPrincipal User user, @RequestParam String profilePic,
-            RedirectAttributes redirectAttributes) {
-        Long userID = user.getId();
-        boolean success = userDao.updateProfilePic(userID, profilePic);
-        if (success) {
-            User updatedUser = userDao.getUserById(userID);
-            Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
-                    updatedUser,
-                    updatedUser.getPassword(),
-                    updatedUser.getAuthorities());
-            SecurityContextHolder.clearContext();
-            SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-            redirectAttributes.addFlashAttribute("message", "Your profile picture has been updated successfully.");
         } else {
             redirectAttributes.addFlashAttribute("error", "Failed to update your profile picture.");
         }
