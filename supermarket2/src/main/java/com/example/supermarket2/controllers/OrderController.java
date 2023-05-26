@@ -9,10 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.supermarket2.models.Cart;
+import com.example.supermarket2.models.CartItem;
 import com.example.supermarket2.models.Order;
 import com.example.supermarket2.models.User;
 import com.example.supermarket2.repositories.CartRepo;
@@ -40,7 +41,7 @@ public class OrderController {
     @PostMapping("/place-order")
     public String placeOrder(@AuthenticationPrincipal User user) {
         Date currentDate = new Date();
-        
+
         Cart cart = null;
         List<Cart> carts = cartRepo.findAllByuserID(user.getId());
         for (Cart cartt : carts) {
@@ -59,19 +60,24 @@ public class OrderController {
                 order.setUserID(user.getId());
                 order.setDateOrdered(currentDate);
                 orderRepo.save(order);
+
+                // Debugging
+                // List<CartItem> cartItems = order.getCart().getCartItems();
+                // System.out.println("CartItems size: " + cartItems.size());
+                // for (CartItem cartItem : cartItems) {
+                // System.out.println(cartItem.getProduct().getName());
+                // }
             }
         }
         return "redirect:/supermarket/orderDone";
     }
 
     @GetMapping("orderDone")
-    public ModelAndView orderDone(@AuthenticationPrincipal User user,
-            RedirectAttributes redirectAttributes) {
+    public ModelAndView orderDone(@AuthenticationPrincipal User user) {
         ModelAndView mav = new ModelAndView("orderDone.html");
 
         String username = user.getUsername();
         mav.addObject("name", username);
-        // redirectAttributes.addFlashAttribute("message", "Hello " + username);
 
         List<Order> userOrders = orderRepo.findAllByuserIDOrderByDateOrderedDesc(user.getId());
         if (!userOrders.isEmpty()) {
@@ -80,6 +86,24 @@ public class OrderController {
             mav.addObject("orderID", id);
         }
 
+        return mav;
+    }
+
+    @PostMapping("viewOrderDetails")
+    public ModelAndView viewDetails(@AuthenticationPrincipal User user,
+            @RequestParam(name = "id", required = true) Long id) {
+        ModelAndView mav = new ModelAndView("order-details.html");
+        Order order = orderRepo.findById(id).orElse(null);
+        if (order != null) {
+            Long orderID = id;
+            List<CartItem> cartItems = order.getCart().getCartItems();
+            int subtotal = order.getSubtotal();
+            Date date = order.getDateOrdered();
+            mav.addObject("orderID", orderID);
+            mav.addObject("cartItems", cartItems);
+            mav.addObject("subtotal", subtotal);
+            mav.addObject("dateOrdered", date);
+        }
         return mav;
     }
 }

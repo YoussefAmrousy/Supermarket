@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>View Cart</title>
+    <title>View Orders</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -19,8 +19,8 @@
             <ul class="nav navbar-nav">
                 <li><a th:href="@{/supermarket/homepage}">Home</a></li>
                 <li><a th:href="@{/supermarket/profile}">Profile</a></li>
-                <li class="active"><a th:href="@{/supermarket/viewCart}">View Cart</a></li>
-                <li><a th:href="@{/supermarket/viewOrders}">View Orders</a></li>
+                <li><a th:href="@{/supermarket/viewCart}">View Cart</a></li>
+                <li class="active"><a th:href="@{/supermarket/viewOrders}">View Orders</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a th:href="@{/supermarket/logout}"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
@@ -38,32 +38,27 @@
 
             <thead>
                 <tr>
-                    <th>Product Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Delete</th>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Subtotal</th>
+                    <th>Order Details</th>
                 </tr>
             </thead>
             <tbody>
-                <th:block th:each="cartItem : ${cartItems}">
+                <th:block th:each="order : ${orders}">
                     <tr>
-                        <td th:text="${cartItem.product.name}" />
-                        <td th:text="${cartItem.quantity}" />
-                        <td th:text="${cartItem.price}" />
+                        <td th:text="${order.id}" />
+                        <td th:text="${order.dateOrdered}" />
+                        <td th:text="${order.subtotal}" />
                         <td>
-                            <form th:action="@{/supermarket/deleteItem}" method="post">
-                                <input type="hidden" th:name="id" th:value="${cartItem.id}" />
-                                <input type="submit" name="delete" value="Delete">
+                            <form th:action="@{/supermarket/viewOrderDetails}" method="post">
+                                <input type="hidden" th:name="id" th:value="${order.id}" />
+                                <input type="submit" name="viewDetails" value="View Order Details">
                             </form>
                         </td>
                     </tr>
             </tbody>
         </table>
-        <label for="price">Total Price</label>
-        <p th:text="${subtotal}"></p>
-        <form th:action="@{/supermarket/place-order}" method="post">
-            <input type="submit" name="placeOrder" value="Place Order">
-        </form>
     </div>
 </body>
 

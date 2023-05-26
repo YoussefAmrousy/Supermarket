@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Order details</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <h3 th:text="'Order ID: ' + ${orderID}"></h3>
+    <h3 th:text="'Subtotal: ' + ${subtotal}"></h3>
+    <h3 th:text="'Date Ordered: ' +${dateOrdered}"></h3>
+    <h2>Order Items</h2>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="cartItem : ${cartItems}">
+                <tr>
+                    <td th:text="${cartItem.product.name}" />
+                    <td th:text="${cartItem.quantity}" />
+                    <td th:text="${cartItem.price}" />
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+</body>
+
+</html>
