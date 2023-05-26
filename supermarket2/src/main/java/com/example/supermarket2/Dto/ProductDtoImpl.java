@@ -1,5 +1,7 @@
 package com.example.supermarket2.Dto;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +25,18 @@ public class ProductDtoImpl implements ProductDto {
     public void decreaseProductQuantity(Product product, CartItem cartItem, int quantity) {
         product.setQuantity(product.getQuantity() - quantity);
         productRepo.save(product);
+    }
+
+    @Override
+    public boolean updateQuantity(Long productId, Integer newQuantity) {
+        Optional<Product> optionalProduct = productRepo.findById(productId);
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            product.setQuantity(newQuantity);
+            productRepo.save(product);
+            return true;
+        }
+        return false;
     }
 
 }

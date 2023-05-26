@@ -6,4 +6,5 @@ import com.example.supermarket2.models.Product;
 public interface ProductDto {
     public void increaseProductQuantity(Product product, CartItem cartItem);
     public void decreaseProductQuantity(Product product, CartItem cartItem, int quantity);
+    public boolean updateQuantity(Long productId, Integer newQuantity);
 }

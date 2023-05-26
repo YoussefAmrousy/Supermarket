@@ -46,7 +46,14 @@
                     <td th:text="${product.name}" />
                     <td th:text="${product.price}" />
                     <td th:text="${product.quantity}" />
-                    <td><button th:id="${product.productId}">Edit</button></td>
+                    <td>
+                        <form th:action="@{/supermarket/update-quantity}" method="post">
+                            <input type="hidden" name="productId" th:value="${product.productId}" />
+                            <input type="number" name="newQuantity" th:value="${product.quantity}" />
+                            <button type="submit">Update</button>
+                        </form>
+                    
+                    </td>
                 </tr>
             </tbody>
 
