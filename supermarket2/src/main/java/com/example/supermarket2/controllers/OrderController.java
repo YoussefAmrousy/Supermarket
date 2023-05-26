@@ -111,8 +111,9 @@ public class OrderController {
     public String cancelOrder(@AuthenticationPrincipal User user,
     @RequestParam(name = "id", required = true) Long id) {
         Order order = orderRepo.findById(id).orElse(null);
+        Cart cart = order.getCart();
         orderRepo.delete(order);
-        orderRepo.save(order);
+        cartRepo.delete(cart);
         return "redirect:/supermarket/viewOrders";
     }
 }
