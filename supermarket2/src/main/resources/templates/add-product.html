@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" type="text/css" href="/css/edit-profile.css">
 
 <head>
     <title>Add Product</title>
@@ -9,6 +8,37 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .form-container {
+            border-right-width: 100px;
+            margin-top: 100px;
+            max-width: 400px;
+        }
+
+        .form-container label {
+            font-weight: bold;
+        }
+
+        .form-container input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,14 +57,27 @@
             </ul>
         </div>
     </nav>
-    <form method="POST" th:action="@{/supermarket/add-product}">
-        <label>Product Name</label>
-        <input type="text" name="name" th:field="*{product.name}"><br>
-        <label>Product Price</label>
-        <input type="text" name="price" th:field="*{product.price}"><br>
-        <label>Quantity</label>
-        <input type="text" name="quantity" th:field="*{product.quantity}"><br>
-        <input type="submit" name="add" value="Add Product">
-    </form>
-
+    <div class="container">
+        <div class="form-container">
+            <form method="POST" th:action="@{/supermarket/add-product}">
+                <div class="form-group">
+                    <label for="productName">Product Name</label>
+                    <input type="text" id="productName" name="name" th:field="*{product.name}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Product Price</label>
+                    <input type="text" id="productPrice" name="price" th:field="*{product.price}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="productQuantity">Quantity</label>
+                    <input type="text" id="productQuantity" name="quantity" th:field="*{product.quantity}" class="form-control">
+                </div>
+                <input type="submit" name="add" value="Add Product" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
 </body>
+
+</html>
+
+
