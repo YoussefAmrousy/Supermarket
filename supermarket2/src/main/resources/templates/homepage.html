@@ -10,14 +10,14 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
     body {
-      background-image: url(static/background.jpg);
+      /* background-image: url(static/background.jpg);
       height: 100%;
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 20px; */
     }
 
     h1 {
@@ -61,10 +61,7 @@
       border-radius: 5px;
     }
   </style>
-</head>
-
-<body>
-  <nav class="navbar navbar-inverse">
+   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">Supermarket</a>
@@ -80,9 +77,17 @@
       </ul>
     </div>
   </nav>
+</head>
+<body style="background-image: url(https://images.unsplash.com/photo-1566454825481-4e48f80aa4d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjR8fEdyb2Nlcmllc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60);
+height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:cover;
+">
+ 
   <form th:each="product : ${products}" th:action="@{/supermarket/save-product-cart}" method="post">
     <div class="card-container">
-      <div class="card">
+      <div class="card" style="background-color: white;">
         <div class="card-content">
           <h3 class="card-title" th:text="${product.name}">Bananas</h3>
           <p th:text="'Price: ' + ${product.price}"></p>
