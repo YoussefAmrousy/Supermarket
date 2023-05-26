@@ -24,25 +24,29 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterchain(HttpSecurity http) throws Exception {
-        http.userDetailsService(userservice)
-                .authorizeRequests()
-                .antMatchers("/supermarket", "/supermarket/saveUser", "/supermarket/reset-pass").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/supermarket/login")
-                .usernameParameter("email")
-                .loginProcessingUrl("/supermarket/check-user")
-                .defaultSuccessUrl("/supermarket/homepage")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/supermarket/logout"))
-                .logoutSuccessUrl("/supermarket/login");
+   
 
-        return http.build();
-    }
 
+public SecurityFilterChain filterchain(HttpSecurity http) throws Exception {
+    http.userDetailsService(userservice)
+    .authorizeRequests()
+    .antMatchers("/supermarket", "/supermarket/saveUser", "/supermarket/reset-pass").permitAll()
+            .antMatchers("/supermarket/adminHomePage")
+            .hasAuthority("Admin")
+            .anyRequest().authenticated()
+            .and()
+            .formLogin()
+            .loginPage("/supermarket/login")
+            .usernameParameter("email")
+            .loginProcessingUrl("/supermarket/check-user")
+            .defaultSuccessUrl("/supermarket/homepage")
+            .successHandler(new MyAuthenticationSuccessHandler())
+            .permitAll()
+            .and()
+            .logout()
+            .permitAll()
+            .logoutRequestMatcher(new AntPathRequestMatcher("/supermarket/logout"))
+            .logoutSuccessUrl("/supermarket/login");
+    return http.build();
+}
 }
