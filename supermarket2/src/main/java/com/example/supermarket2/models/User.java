@@ -96,7 +96,12 @@ public class User implements UserDetails {
     public String getAddress() {
         return address;
     }
-
+    public void setRole(String role){
+        this.role = role;
+    }
+    public String getRole(){
+        return role;
+    }
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<GrantedAuthority>(Arrays.asList(new SimpleGrantedAuthority(this.role)));
     }
