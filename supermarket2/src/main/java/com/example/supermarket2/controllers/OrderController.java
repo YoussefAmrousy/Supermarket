@@ -39,7 +39,7 @@ public class OrderController {
     }
 
     @PostMapping("/place-order")
-    public String placeOrder(@AuthenticationPrincipal User user) {
+    public ModelAndView placeOrder(@AuthenticationPrincipal User user) {
         Date currentDate = new Date();
 
         Cart cart = null;
@@ -50,8 +50,9 @@ public class OrderController {
                 break;
             }
         }
+        ModelAndView mav = new ModelAndView();
         if (cart != null) {
-            if (cart.isOrdered() != true) {
+            if (!cart.isOrdered()) {
                 cart.setOrdered(true);
                 cartRepo.save(cart);
                 Order order = new Order();
@@ -60,16 +61,16 @@ public class OrderController {
                 order.setUserID(user.getId());
                 order.setDateOrdered(currentDate);
                 orderRepo.save(order);
-
-                // Debugging
-                // List<CartItem> cartItems = order.getCart().getCartItems();
-                // System.out.println("CartItems size: " + cartItems.size());
-                // for (CartItem cartItem : cartItems) {
-                // System.out.println(cartItem.getProduct().getName());
-                // }
+                mav.setViewName("redirect:/supermarket/orderDone");
+            } else {
+                mav.addObject("message", "Your cart is empty.");
+                mav.setViewName("view-cart.html");
             }
+        } else {
+            mav.addObject("message", "Your cart is empty.");
+            mav.setViewName("view-cart.html");
         }
-        return "redirect:/supermarket/orderDone";
+        return mav;
     }
 
     @GetMapping("orderDone")
@@ -115,5 +116,5 @@ public class OrderController {
         orderRepo.delete(order);
         cartRepo.delete(cart);
         return "redirect:/supermarket/viewOrders";
-    }
+    }   
 }
