@@ -82,11 +82,13 @@
                 </th:block>
             </tbody>
         </table>
-        <label class="total-price-label" for="price">Total Price:</label>
+
+        <label for="price">Total Price</label>
         <p th:text="${subtotal}"></p>
-        <button class="btn btn-primary checkout-btn" type="submit" name="placeOrder">Place Order</button>
+        <form th:action="@{/supermarket/place-order}" method="post">
+            <button class="btn btn-primary checkout-btn" type="submit" name="placeOrder">Place Order</button>
+        </form>
     </div>
 </body>
 
 </html>
-
