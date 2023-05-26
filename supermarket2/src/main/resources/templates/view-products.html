@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -7,6 +8,32 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .product-table {
+            margin-top: 20px;
+        }
+
+        .product-table th,
+        .product-table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .edit-quantity-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .edit-quantity-form input[type="number"] {
+            width: 70px;
+            text-align: center;
+        }
+
+        .edit-quantity-form button[type="submit"] {
+            margin-left: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,13 +53,9 @@
         </div>
     </nav>
     <div class="container">
-
         <h3>List Products</h3>
-
         <hr />
-
-        <table class="table table-bordered table-striped">
-
+        <table class="table table-bordered table-striped product-table">
             <thead>
                 <tr>
                     <th>Product Name</th>
@@ -47,18 +70,17 @@
                     <td th:text="${product.price}" />
                     <td th:text="${product.quantity}" />
                     <td>
-                        <form th:action="@{/supermarket/update-quantity}" method="post">
+                        <form th:action="@{/supermarket/update-quantity}" method="post" class="edit-quantity-form">
                             <input type="hidden" name="productId" th:value="${product.productId}" />
-                            <input type="number" name="newQuantity" th:value="${product.quantity}" />
-                            <button type="submit">Update</button>
+                            <input type="number" name="newQuantity" th:value="${product.quantity}" class="form-control" />
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </form>
-                    
                     </td>
                 </tr>
             </tbody>
-
         </table>
     </div>
 </body>
 
 </html>
+
