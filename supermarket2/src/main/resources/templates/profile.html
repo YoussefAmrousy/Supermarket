@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -27,16 +27,30 @@
             </ul>
         </div>
     </nav>
-
-    <div th:unless="${isList}" class="profile-container">
-        <p stlye="display:inline">Username:</p>
-        <p style="display:inline" class="profile-name" th:text="${user.username}"></p>
-        </td>
-        <p th:text="${user.email}" class="profile-email"></p>
-        <button><a th:href="@{/supermarket/edit-profile}">Edit Profile</a></button>
-    </div>
-
-    <div id="favorite-list-container" style="display: none;"></div>
+    <div class="card">
+        <img style="width: 120px;
+        height: 120px;
+        margin-left: auto;
+        margin-right: auto;
+ display: block;"
+        src="https://png.pngtree.com/png-clipart/20210915/ourlarge/pngtree-user-avatar-placeholder-black-png-image_3918427.jpg">
+        <h1 style="text-align: center;">Welcome Mr</h1>
+        <div th:unless="${isList}" class="profile-container">
+          <p style=" text-align: center;" class="profile-name" th:text="${user.username}"></p>
+          </td>
+          <p style="text-align: center;" th:text="${user.email}" class="profile-email"></p>
+        <button type="button" class="btn btn-success" style="background-color: #4CAF50;
+        margin: 0;
+       position: absolute;
+       top: 50%;
+       left: 50%;
+       -ms-transform: translate(-50%, -50%);
+       transform: translate(-50%, -50%);"><a style="color: azure;" th:href="@{/supermarket/edit-profile}">Edit Profile</a></button>
+      </div>
+      
+      <div id="favorite-list-container" style="display: none;"></div>
+      </div>
+    
 
 </body>
 
