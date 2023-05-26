@@ -67,7 +67,12 @@ public class UserController {
                 user.getAuthorities());
         Authentication authenticated = this.authservice.authenticate(authentication);
         SecurityContextHolder.getContext().setAuthentication(authenticated);
-        return "redirect:/supermarket/homepage";
+        boolean isAdmin = user.getRole().equals("Admin");
+        if (isAdmin) {
+            return "redirect:/supermarket/adminHomepage";
+        } else {
+            return "redirect:/supermarket/homepage";
+        }
     }
 
     @GetMapping("reset-pass")

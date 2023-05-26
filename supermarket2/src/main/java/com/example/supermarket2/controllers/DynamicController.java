@@ -20,4 +20,9 @@ public class DynamicController {
         mav.addObject("products", productRepo.findAll());
         return mav;
     }
+    @GetMapping("/adminHomepage")
+    public ModelAndView getAdminPage() {
+        ModelAndView mav = new ModelAndView("admin-home-page.html");
+        return mav;
+    }
 }
