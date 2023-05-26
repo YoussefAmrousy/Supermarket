@@ -106,4 +106,13 @@ public class OrderController {
         }
         return mav;
     }
+
+    @PostMapping("CancelOrder")
+    public String cancelOrder(@AuthenticationPrincipal User user,
+    @RequestParam(name = "id", required = true) Long id) {
+        Order order = orderRepo.findById(id).orElse(null);
+        orderRepo.delete(order);
+        orderRepo.save(order);
+        return "redirect:/supermarket/viewOrders";
+    }
 }
