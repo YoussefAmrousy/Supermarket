@@ -43,9 +43,20 @@ public class CartDtoImpl implements CartDto {
 
     @Override
     public void deleteCartItemFromCart(User user, CartItem cartItem) {
-        Cart cart = cartRepo.findByuserID(user.getId()).orElse(null);
-        if (cart != null) {
+        // Cart cart = cartRepo.findByuserID(user.getId()).orElse(null);
+        Cart cart = null;
+        List<Cart> carts = cartRepo.findAllByuserID(user.getId());
+        for (Cart cartt : carts) {
+            if (cartt.isOrdered() != true) {
+                cart = cartt;
+                break;
+            }
+        }
+
+        if (cart != null && cart.isOrdered() == false) {
             cart.getCartItems().remove(cartItem);
+            decreaseCartSubTotal(user, cart, cartItem.getPrice());
+            
             if (cart.getCartItems().isEmpty()) {
                 cartRepo.delete(cart);
                 cartRepo.save(cart);

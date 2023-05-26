@@ -29,6 +29,7 @@ public class CartController {
         for (Cart cart : carts) {
             if (cart.isOrdered() != true) {
                 mav.addObject("cartItems", cart.getCartItems());
+                mav.addObject("subtotal", cart.getSubtotal());
                 break;
             }
         }

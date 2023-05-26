@@ -29,9 +29,6 @@
     </nav>
 
     <div th:unless="${isList}" class="profile-container">
-        <div class="background-gradient">
-            <img class="profilePic" th:src="${user.profilePic}" />
-        </div>
         <p stlye="display:inline">Username:</p>
         <p style="display:inline" class="profile-name" th:text="${user.username}"></p>
         </td>

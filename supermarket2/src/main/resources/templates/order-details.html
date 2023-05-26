@@ -11,9 +11,22 @@
 </head>
 
 <body>
-    <h3 th:text="'Order ID: ' + ${orderID}"></h3>
-    <h3 th:text="'Subtotal: ' + ${subtotal}"></h3>
-    <h3 th:text="'Date Ordered: ' +${dateOrdered}"></h3>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Supermarket</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a th:href="@{/supermarket/homepage}">Back</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/supermarket/logout}"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <h4 th:text="'Order ID: ' + ${orderID}"></h4>
+    <h4 th:text="'Subtotal: ' + ${subtotal}"></h4>
+    <h4 th:text="'Date Ordered: ' +${dateOrdered}"></h4>
     <h2>Order Items</h2>
 
     <table class="table table-bordered table-striped">
