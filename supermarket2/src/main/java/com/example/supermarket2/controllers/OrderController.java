@@ -39,7 +39,7 @@ public class OrderController {
     }
 
     @PostMapping("/place-order")
-    public ModelAndView placeOrder(@AuthenticationPrincipal User user) {
+    public String placeOrder(@AuthenticationPrincipal User user) {
         Date currentDate = new Date();
 
         Cart cart = null;
@@ -50,9 +50,8 @@ public class OrderController {
                 break;
             }
         }
-        ModelAndView mav = new ModelAndView();
         if (cart != null) {
-            if (!cart.isOrdered()) {
+            if (cart.isOrdered() != true) {
                 cart.setOrdered(true);
                 cartRepo.save(cart);
                 Order order = new Order();
@@ -61,16 +60,16 @@ public class OrderController {
                 order.setUserID(user.getId());
                 order.setDateOrdered(currentDate);
                 orderRepo.save(order);
-                mav.setViewName("redirect:/supermarket/orderDone");
-            } else {
-                mav.addObject("message", "Your cart is empty.");
-                mav.setViewName("view-cart.html");
+
+                // Debugging
+                // List<CartItem> cartItems = order.getCart().getCartItems();
+                // System.out.println("CartItems size: " + cartItems.size());
+                // for (CartItem cartItem : cartItems) {
+                // System.out.println(cartItem.getProduct().getName());
+                // }
             }
-        } else {
-            mav.addObject("message", "Your cart is empty.");
-            mav.setViewName("view-cart.html");
         }
-        return mav;
+        return "redirect:/supermarket/orderDone";
     }
 
     @GetMapping("orderDone")
@@ -85,6 +84,9 @@ public class OrderController {
             Order lastOrder = userOrders.get(0);
             Long id = lastOrder.getId();
             mav.addObject("orderID", id);
+            mav.addObject("address", user.getAddress());
+            mav.addObject("subtotal", lastOrder.getSubtotal());
+            mav.addObject("date", lastOrder.getDateOrdered());
         }
 
         return mav;
@@ -110,11 +112,9 @@ public class OrderController {
 
     @PostMapping("CancelOrder")
     public String cancelOrder(@AuthenticationPrincipal User user,
-    @RequestParam(name = "id", required = true) Long id) {
+            @RequestParam(name = "id", required = true) Long id) {
         Order order = orderRepo.findById(id).orElse(null);
-        Cart cart = order.getCart();
         orderRepo.delete(order);
-        cartRepo.delete(cart);
         return "redirect:/supermarket/viewOrders";
-    }   
+    }
 }
