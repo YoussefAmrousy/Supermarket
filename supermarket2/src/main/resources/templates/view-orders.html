@@ -75,7 +75,7 @@
                     <tr>
                         <td th:text="${order.id}" />
                         <td th:text="${order.dateOrdered}" />
-                        <td th:text="${order.subtotal}" />
+                        <td th:text="${order.subtotal} + 'LE'" />
                         <td>
                             <form th:action="@{/supermarket/viewOrderDetails}" method="post">
                                 <input type="hidden" th:name="id" th:value="${order.id}" />

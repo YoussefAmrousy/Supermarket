@@ -2,6 +2,7 @@ package com.example.supermarket2.controllers;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -52,13 +53,13 @@ public class CartItemController {
                 
                 // Check if product exists
                 if (product == null) {
-                    redirectAttributes.addFlashAttribute("message", "Product not found!");
+                    // redirectAttributes.addFlashAttribute("message", "Not Enough Quantity");
                     return "redirect:/supermarket/homepage";
                 }
 
                 // Check if there is enough quantity
                 if (quantity > product.getQuantity()) {
-                    redirectAttributes.addFlashAttribute("message", "Not enough quantity available, there's only " + product.getQuantity() + " available");
+                    // redirectAttributes.addFlashAttribute("message", "Not Enough Quantity");
                     return "redirect:/supermarket/homepage";
                 }
                 
@@ -97,10 +98,9 @@ public class CartItemController {
                 cartDto.increaseCartSubTotal(user, cart, cartItem.getPrice());
                 cartRepo.save(cart);
 
-                redirectAttributes.addFlashAttribute("message", "You've added " + product.getName() + " to your cart");
 
                 return "redirect:/supermarket/homepage";
-    }
+            }
 
     @PostMapping("/deleteItem")
     public String deleteCartItem(@RequestParam(name = "id", required = true) Long id,
