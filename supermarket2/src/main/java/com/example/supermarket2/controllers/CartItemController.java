@@ -96,6 +96,7 @@ public class CartItemController {
                 cartItemRepo.save(cartItem);
 
                 cartDto.increaseCartSubTotal(user, cart, cartItem.getPrice());
+                cart.setTotalItems(cart.getCartItems().size());
                 cartRepo.save(cart);
 
 
