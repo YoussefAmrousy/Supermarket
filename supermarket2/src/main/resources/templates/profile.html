@@ -34,9 +34,8 @@
         margin-right: auto;
  display: block;"
         src="https://png.pngtree.com/png-clipart/20210915/ourlarge/pngtree-user-avatar-placeholder-black-png-image_3918427.jpg">
-        <h1 style="text-align: center;">Welcome Mr</h1>
+        <h1 style="text-align: center;" th:text="'Welcome Mr, ' + ${user.username}"></h1>
         <div th:unless="${isList}" class="profile-container">
-          <p style=" text-align: center;" class="profile-name" th:text="${user.username}"></p>
           </td>
           <p style="text-align: center;" th:text="${user.email}" class="profile-email"></p>
         <button type="button" class="btn btn-success" style="background-color: #4CAF50;

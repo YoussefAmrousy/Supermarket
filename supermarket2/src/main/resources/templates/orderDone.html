@@ -68,6 +68,19 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Supermarket</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/supermarket/homepage}">Back</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/supermarket/logout}"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
+            </ul>
+        </div>
+    </nav>
     <div class="container">
         <h1>Order Confirmation</h1>
         <h2 th:text="'Hello, ' + ${name}"></h2>
@@ -89,7 +102,7 @@
                 <p>Payment Method: Credit Card</p>
             </strong>
 
-           
+
             <strong>
                 <p class="total-amount" th:text="'Total Amount: $' + ${subtotal}"></p>
             </strong>
