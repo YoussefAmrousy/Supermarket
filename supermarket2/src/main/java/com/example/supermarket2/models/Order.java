@@ -25,6 +25,7 @@ public class Order {
     private Cart cart;
 
     private Long userID;
+    private String orderName;
     private int subtotal;
     
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -81,4 +82,12 @@ public class Order {
     public void setDateOrdered(Date dateOrdered) {
         this.dateOrdered = dateOrdered;
     } 
+
+    public String getOrderName() {
+        return orderName;
+    }
+
+    public void setOrderName(String orderName) {
+        this.orderName = orderName;
+    }
 }

@@ -31,7 +31,7 @@ public SecurityFilterChain filterchain(HttpSecurity http) throws Exception {
     http.userDetailsService(userservice)
     .authorizeRequests()
     .antMatchers("/supermarket", "/supermarket/saveUser", "/supermarket/reset-pass").permitAll()
-            .antMatchers("/supermarket/adminHomePage")
+            .antMatchers("/supermarket/adminHomePage", "/supermarket/addProduct-form", "/supermarket/viewProducts-form", "/admin/viewAllOrders")
             .hasAuthority("Admin")
             .anyRequest().authenticated()
             .and()

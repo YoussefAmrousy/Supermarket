@@ -35,7 +35,6 @@ public class OrderController {
         List<Order> orders = orderRepo.findAllByuserID(user.getId());
         mav.addObject("orders", orders);
         return mav;
-
     }
 
     @PostMapping("/place-order")
@@ -55,6 +54,7 @@ public class OrderController {
                 cart.setOrdered(true);
                 cartRepo.save(cart);
                 Order order = new Order();
+                order.setOrderName(user.getUsername());
                 order.setCart(cart);
                 order.setSubtotal(cart.getSubtotal());
                 order.setUserID(user.getId());
