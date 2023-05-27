@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" type="text/css" href="/css/edit-profile.css">
 
 <head>
     <title>Edit Profile</title>
@@ -9,69 +8,90 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: #e9e9e9;
+        }
+    </style>
 </head>
 <div class="edit-container">
 
     <body>
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Supermarket</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li><a th:href="@{/supermarket/homepage}">Home</a></li>
-                    <li class="active"><a th:href="@{/supermarket/profile}">Profile</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a th:href="@{/supermarket/logout}"><span class="glyphicon glyphicon-user"></span>Logout</a>
-                    </li>
-                </ul>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Supermarket</a>
             </div>
-        </nav>
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/supermarket/homepage}">Home</a></li>
+                <li class="active"><a th:href="@{/supermarket/profile}">Profile</a></li>
+                <li><a th:href="@{/supermarket/viewCart}">View Cart</a></li>
+                <li><a th:href="@{/supermarket/viewOrders}">View Orders</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/supermarket/logout}"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
         <h1 class="title-card">Edit Profile</h1>
+
         <div th:if="${message}">
             <p th:text="${message}" class="success-message"></p>
         </div>
+
         <form method="post" th:action="@{/supermarket/update-username}">
             <input type="hidden" name="oldUsername" th:value="${user.username}" />
             <label class="edit-label">Username:</label>
-            <div class="edit-input-container">
-                <input class="edit-input" type="text" name="newUsername" th:value="${user.username}" />
-                <button class="update-edit-button" type="submit">Update Username</button>
+            <div>
+                <input type="text" name="newUsername" th:value="${user.username}" />
+                <button type="submit">Update Username</button>
             </div>
         </form>
+
+
         <form method="post" th:action="@{/supermarket/update-password}">
             <input type="hidden" name="username" th:value="${user.username}" />
             <label class="edit-label">New Password:</label>
-            <div class="edit-input-container">
-                <input class="edit-input" type="password" name="newPassword" />
-                <button class="update-edit-button" type="submit">Update Password</button>
+            <div>
+                <input type="password" name="newPassword" />
+                <button type="submit">Update Password</button>
             </div>
         </form>
+
+
         <form method="post" th:action="@{/supermarket/update-address}">
             <label class="edit-label">Address:</label>
-            <div class="edit-input-container">
-                <input class="edit-input" type="text" name="addressField" th:value="${user.address}" />
-                <button class="update-edit-button" type="submit">Update Address</button>
+            <div>
+                <input type="text" name="addressField" th:value="${user.address}" />
+                <button type="submit">Update Address</button>
             </div>
         </form>
+
+
         <form method="post" th:action="@{/supermarket/update-CreditCard}">
             <label class="edit-label">Credit Card:</label>
-            <div class="edit-input-container">
-                <input class="edit-input" type="text" name="creditCardField" th:value="${user.creditCard}" />
-                <button class="update-edit-button" type="submit">Update Credit Card</button>
+            <div>
+                <input type="text" name="creditCardField" th:value="${user.creditCard}" />
+                <button type="submit">Update Credit Card</button>
             </div>
         </form>
+
+
         <form method="post" th:action="@{/supermarket/update-Cvv}">
             <label class="edit-label">Cvv:</label>
-            <div class="edit-input-container">
-                <input class="edit-input" type="text" name="cvvField" th:value="${user.cvv}" />
-                <button class="update-edit-button" type="submit">Update Cvv</button>
+            <div>
+                <input type="text" name="cvvField" th:value="${user.cvv}" />
+                <button type="submit">Update Cvv</button>
             </div>
         </form>
+
+
         <form method="get" th:action="@{/supermarket/profile}">
             <button class="return-button" type="submit">Return to profile page</button>
         </form>
+
+
     </body>
 </div>
 

@@ -4,7 +4,7 @@
     <title>Login</title>
 </head>
 
-<body style="background-image: url(https://images.unsplash.com/photo-1578916171728-46686eac8d58?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c3VwZXJtYXJrZXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60); 
+<body style="background-image: url(https://wallpaperaccess.com/full/1624847.jpg); 
   height: 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -14,9 +14,11 @@
         <h1 style="text-align: center;padding-top: 15px;color:darkgrey ;">Login<br><br>
             <form th:action="@{/supermarket/check-user}" th:object="${user}" method="POST">
                 <div><input type="text" th:field="*{email}" name="email" placeholder="Enter email"
-                        style="width : 70%;padding: 7px;border-radius: 6px;border: 1px solid gray;" required/></div><br>
+                        style="width : 70%;padding: 7px;border-radius: 6px;border: 1px solid gray;" required /></div>
+                <br>
                 <div><input type="password" th:field="*{password}" name="password" placeholder="Enter password"
-                        style="width : 70%;padding: 7px;border-radius: 6px;border: 1px solid gray;" required/> </div><br>
+                        style="width : 70%;padding: 7px;border-radius: 6px;border: 1px solid gray;" required /> </div>
+                <br>
                 <button type="submit" style="width : 40%;height:27px;
                background-color: darkgrey; border-radius: 6px;border: 1px darkgrey; color: white;">Login</button>
             </form>
