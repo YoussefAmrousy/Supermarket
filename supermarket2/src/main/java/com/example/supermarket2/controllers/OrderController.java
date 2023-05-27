@@ -60,6 +60,7 @@ public class OrderController {
                 order.setUserID(user.getId());
                 order.setDateOrdered(currentDate);
                 orderRepo.save(order);
+                return "redirect:/supermarket/orderDone";
 
                 // Debugging
                 // List<CartItem> cartItems = order.getCart().getCartItems();
@@ -69,7 +70,7 @@ public class OrderController {
                 // }
             }
         }
-        return "redirect:/supermarket/orderDone";
+        return "redirect:/supermarket/viewCart";
     }
 
     @GetMapping("orderDone")

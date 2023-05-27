@@ -15,14 +15,14 @@ height: 100%;
                         <form th:action="@{/supermarket/saveUser}" th:object="${user}" method="post">
                                 <div><input type="text" th:field="*{username}" name="username"
                                                 placeholder="Enter username"
-                                                style="width : 70%;padding: 7px;border-radius: 6px;border: 1px solid gray;" />
+                                                style="width : 70%;padding: 7px;border-radius: 6px;border: 1px solid gray;" required/>
                                 </div><br>
                                 <div><input type="text" th:field="*{email}" name="email" placeholder="Enter email"
-                                                style="width : 70%;padding: 7px;border-radius: 6px;border: 1px solid gray;" />
+                                                style="width : 70%;padding: 7px;border-radius: 6px;border: 1px solid gray;" required/>
                                 </div><br>
                                 <div><input type="password" th:field="*{password}" name="password"
                                                 placeholder="Enter password"
-                                                style="width : 70%;padding: 7px;border-radius: 6px;border: 1px solid gray;" />
+                                                style="width : 70%;padding: 7px;border-radius: 6px;border: 1px solid gray;" required/>
                                 </div><br>
                                 <button type="submit" style="width : 40%;height:27px;
                 background-color: darkgray; border-radius: 6px;border: 1px darkgreen; color: white;"> Sign Up</button><br>
