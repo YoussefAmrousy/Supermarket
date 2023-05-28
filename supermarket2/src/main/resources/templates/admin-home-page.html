@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Admin Home Page</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <style>
-            body {
-                background-color: #e9e9e9;
-            }
-        </style>
-    </head>
+
+<head>
+    <title>Admin Home Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: #e9e9e9;
+        }
+    </style>
+</head>
 
 <body class="admin-body-side-menu">
     <nav class="navbar navbar-inverse">
@@ -31,5 +32,22 @@
             </ul>
         </div>
     </nav>
+
+    <div class="card">
+        <img style="width: 120px;
+            height: 120px;
+            margin-left: auto;
+            margin-right: auto;
+     display: block;"
+            src="https://png.pngtree.com/png-clipart/20210915/ourlarge/pngtree-user-avatar-placeholder-black-png-image_3918427.jpg">
+        <h1 style="text-align: center;" th:text="'Welcome Mr, ' + ${user.username}"></h1>
+        <div th:unless="${isList}" class="profile-container">
+            </td>
+            <p style="text-align: center;" th:text="${user.email}" class="profile-email"></p>
+        </div>
+
+        <div id="favorite-list-container" style="display: none;"></div>
+    </div>
 </body>
+
 </html>
