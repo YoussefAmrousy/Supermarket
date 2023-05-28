@@ -1,8 +1,14 @@
 package com.example.supermarket2.controllers;
 
+import com.example.supermarket2.models.Cart;
+import com.example.supermarket2.models.CartItem;
 import com.example.supermarket2.models.Product;
+import com.example.supermarket2.repositories.CartItemRepo;
+import com.example.supermarket2.repositories.CartRepo;
 import com.example.supermarket2.repositories.ProductRepo;
 import com.example.supermarket2.Dto.ProductDto;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +27,9 @@ public class ProductController {
 
     @Autowired
     private ProductDto productDto;
+
+    @Autowired
+    private CartItemRepo cartItemRepo;
 
     @GetMapping("/addProduct-form")
     public ModelAndView getProductForm() {
@@ -53,5 +62,21 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("error", "Failed to update quantity");
         }
         return "redirect:/supermarket/viewProducts-form";
+    }
+
+    @PostMapping("/delete-product")
+    public String deleteProduct(@RequestParam Long productId, RedirectAttributes redirectAttributes) {
+        Product product = productRepo.findById(productId).orElse(null);
+        List<CartItem> cartItems = cartItemRepo.findAll();
+        for (CartItem cartItem : cartItems) {
+            if (cartItem.getProduct().getProductId() == productId) {
+                cartItemRepo.delete(cartItem);
+            }
+        }
+        if (product != null) {
+            productRepo.delete(product);
+            redirectAttributes.addFlashAttribute("message", "Product Deleted Successfully!");
+        }
+        return "redirect:/supermarket/viewProducts-form"; 
     }
 }
