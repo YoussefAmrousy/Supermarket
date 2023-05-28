@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class ExceptionsAspect {
-    @Pointcut("within(com.project.elibrary.controllers.*)")
+    @Pointcut("within(com.example.supermarket2.controllers.*)")
     void controllersPointCut() {
     };
 
