@@ -1,0 +1,20 @@
+version: '4.19.0'
+services: 
+  server:
+    build: .
+    restart: always
+    ports: 
+      - 8090:8090
+    depends_on:
+      - mysqldb
+  mysqldb:
+    platform: linux/x86_64
+    image: "mysql:5.7"
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: supermarket
+      MYSQL_USER: hassan123
+      MYSQL_PASSWORD: hassan123
+      MYSQL_ROOT_PASSWORD: hassan123
