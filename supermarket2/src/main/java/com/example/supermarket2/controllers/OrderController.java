@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.supermarket2.Dto.ProductDto;
 import com.example.supermarket2.models.Cart;
 import com.example.supermarket2.models.CartItem;
 import com.example.supermarket2.models.Order;
+import com.example.supermarket2.models.Product;
 import com.example.supermarket2.models.User;
 import com.example.supermarket2.repositories.CartRepo;
 import com.example.supermarket2.repositories.OrderRepo;
@@ -28,6 +30,9 @@ public class OrderController {
 
     @Autowired
     private OrderRepo orderRepo;
+
+    @Autowired
+    private ProductDto productDto;
 
     @GetMapping("/viewOrders")
     public ModelAndView viewOrders(@AuthenticationPrincipal User user) {
@@ -115,6 +120,11 @@ public class OrderController {
     public String cancelOrder(@AuthenticationPrincipal User user,
             @RequestParam(name = "id", required = true) Long id) {
         Order order = orderRepo.findById(id).orElse(null);
+        List<CartItem> cartItems = order.getCart().getCartItems();
+        for (CartItem cartItem : cartItems) {
+            Product product = cartItem.getProduct();
+            productDto.increaseProductQuantity(product, cartItem);
+        }
         orderRepo.delete(order);
         return "redirect:/supermarket/viewOrders";
     }
